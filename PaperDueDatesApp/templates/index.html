@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+   <title>Paper Due Dates</title>
+   <style>
+       .column {
+           float: left;
+           width: 50%;
+       }
+   </style>
+</head>
+<body>
+   <h1>Enter Paper Details</h1>
+   <form action="/submit" method="post">
+       <label for="subject">Subject:</label>
+       <input type="text" name="subject" required><br>
+       <label for="due_date">Due Date:</label>
+       <input type="date" name="due_date" required><br>
+       <label for="style">Style:</label>
+       <input type="text" name="style" required><br>
+       <label for="difficulty">Difficulty:</label>
+       <input type="text" name="difficulty" required><br>
+       <input type="submit" value="Submit">
+   </form>
+   <div class="column">
+       <h2>Paper List by Date</h2>
+       <ul>
+           {% for paper in papers %}
+           <li>
+               {% if paper.completed %}
+               <del>{{ paper.subject }} - Due: {{ paper.due_date }}</del>
+               {% else %}
+               {{ paper.subject }} - Due: {{ paper.due_date }}
+               {% endif %}
+               <a href="/delete/{{ loop.index0 }}">[Delete]</a>
+               <br>
+               Style: {{ paper.style }} | Difficulty: {{ paper.difficulty }}
+           </li>
+           {% endfor %}
+       </ul>
+   </div>
+   <div class="column">
+       <h2>Paper List by Difficulty</h2>
+       <ul>
+           {% for paper in papers_by_difficulty %}
+           <li>
+               {% if paper.completed %}
+               <del>{{ paper.subject }} - Due: {{ paper.due_date }}</del>
+               {% else %}
+               {{ paper.subject }} - Due: {{ paper.due_date }}
+               {% endif %}
+               <a href="/delete/{{ loop.index0 }}">[Delete]</a>
+               <br>
+               Style: {{ paper.style }} | Difficulty: {{ paper.difficulty }}
+           </li>
+           {% endfor %}
+       </ul>
+   </div>
+</body>
